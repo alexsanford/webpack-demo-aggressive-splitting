@@ -1,12 +1,25 @@
-import _ from 'lodash';
-import moment from 'moment';
+lodashPromise = import('lodash');
+momentPromise = import('moment');
 
 function component() {
-	var element = document.createElement( 'div' );
+	return Promise.all( [ lodashPromise, momentPromise ] ).then(
+		( args ) => {
 
-	element.innerHTML = _.join( [ 'Hello', 'World!' ], ' ' );
+			[ _, moment ] = args;
 
-	return element;
+			var element = document.createElement( 'div' );
+
+			element.innerHTML = _.join(
+				[
+					'Hello',
+					'World!',
+					'--',
+					moment().format('MMMM Do YYYY, h:mm:ss a')
+				], ' ' );
+
+			return element;
+		}
+	)
 }
 
-document.body.appendChild( component() );
+component().then( element => document.body.appendChild( element ) );
