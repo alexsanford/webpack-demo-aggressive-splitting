@@ -1,25 +1,20 @@
-lodashPromise = import('lodash');
-momentPromise = import('moment');
-
-function component() {
-	return Promise.all( [ lodashPromise, momentPromise ] ).then(
-		( args ) => {
-
-			[ _, moment ] = args;
-
-			var element = document.createElement( 'div' );
-
-			element.innerHTML = _.join(
-				[
-					'Hello',
-					'World!',
-					'--',
-					moment().format('MMMM Do YYYY, h:mm:ss a')
-				], ' ' );
-
-			return element;
-		}
-	)
+window.showGreeting = function() {
+	import( './greeting' ).then( ( greet ) => {
+		let el = document.getElementById( 'greeting' );
+		el.innerHTML = greet.default();
+	} );
 }
 
-component().then( element => document.body.appendChild( element ) );
+window.showTimestamp = function() {
+	import( './timestamp' ).then( ( timestamp ) => {
+		let el = document.getElementById( 'timestamp' );
+		el.innerHTML = timestamp.default();
+	} );
+}
+
+window.showWisdom = function() {
+	import( './wisdom' ).then( ( wisdom ) => {
+		let el = document.getElementById( 'wisdom' );
+		el.innerHTML = wisdom.default();
+	} );
+}
